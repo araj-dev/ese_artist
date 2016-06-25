@@ -15,7 +15,7 @@ var io = socketio.listen(server);
 
 router.use(express.static(path.resolve(__dirname, 'client')));
 
-var users = {};
+var users = [];
 
 io.on('connection', function (socket) {
   //Identify
@@ -25,14 +25,14 @@ io.on('connection', function (socket) {
   socket.on('inRoomCtoS',function(data){
     console.log(data);
     console.log(data.user.name + " entered room");
-    users[data.id] = data.user;
+    users[] = data;
     io.sockets.emit('inRoomStoC', users);
   });
   
-  //Update user to Client
-  socket.on('updateUserCtoS',function(data){
-//    users[data.id] = data.center;
-//    io.sockets.emit('updateUserStoC',data);
+  socket.on('startGame',function(data){
+    var eseID = Math.floor(Math.random()*Object.keys(users).length);
+    data[eseID].ese = true;
+    
   });
   
   
@@ -42,7 +42,9 @@ io.on('connection', function (socket) {
     console.log(users);
     //Send socket "ID" which was disconnected for Clients
     io.sockets.emit('removeuserStoC', id);
-    // console.log(users[id].name + " leave room");
+    if(typeof users[id] !== "undefined"){
+      console.log(users[id].name + " leave room");
+    }
     console.log("ID: " + id + " has disconnected");
     delete users[id];
   });
