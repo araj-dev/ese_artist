@@ -45,7 +45,7 @@ io.on('connection', function (socket) {
     console.log("ID: " + socket.id.substring(2) + " has disconnected");
     users.splice(id, 1);
     console.log(users);
-    io.sockets.emit('disconnect', users);
+    io.sockets.emit('removeUserStoC', users);
   });
 
   function searchIndex(socketID){
