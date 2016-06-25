@@ -38,10 +38,10 @@ io.on('connection', function (socket) {
   //Disconncting action
   socket.on('disconnect',function(){
     var id = socket.id.substring(2);
+    console.log(users);
     //Send socket "ID" which was disconnected for Clients
     io.sockets.emit('removeuserStoC', id);
-    var user = users[id];
-    console.log(user.name + " leave room");
+    // console.log(users[id].name + " leave room");
     console.log("ID: " + id + " has disconnected");
     delete users[id];
   });
