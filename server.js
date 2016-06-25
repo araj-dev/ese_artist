@@ -32,7 +32,6 @@ io.on('connection', function (socket) {
   socket.on('startGame',function(data){
     var eseID = Math.floor(Math.random()*Object.keys(users).length);
     data[eseID].ese = true;
-    
   });
   
   
