@@ -13,7 +13,7 @@
             console.log('connected');
         });
         function sendName(){
-            socket.emit('inRommCtoS',{id:self.socket.id,user:self.user});
+            self.socket.emit('inRommCtoS',{id:self.socket.id,user:self.user});
         }
         sendName();
     </script>
