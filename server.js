@@ -26,7 +26,7 @@ io.on('connection', function (socket) {
     console.log(data.user.name + " entered room");
     users[data.ID] = data.id;
     users[data.user] = data.user;
-    io.sockets.emit('inRoomStoC',data);
+    io.sockets.emit('inRoomStoC', users);
   });
   
   //Update user to Client
