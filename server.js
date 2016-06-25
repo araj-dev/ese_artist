@@ -23,10 +23,10 @@ io.on('connection', function (socket) {
 
   //Add new user to Client map
   socket.on('inRoomCtoS',function(data){
-    console.log("New user added from : "+data.id);
-    users[data.id] = data.name;
+    console.log(data.user.name + " entered room");
+    users[data.ID] = data.id;
+    users[data.user] = data.user;
     io.sockets.emit('inRoomStoC',data);
-    console.log(users);
   });
   
   //Update user to Client
