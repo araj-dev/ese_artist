@@ -38,22 +38,16 @@ io.on('connection', function (socket) {
   
   //Disconncting action
   socket.on('disconnect',function(){
+    var id = socket.id.substring(2);
     console.log(users);
-    var id = searchIndex(socket.id.substring(2));
+    //Send socket "ID" which was disconnected for Clients
+    io.sockets.emit('removeuserStoC', id);
     if(typeof users[id] !== "undefined"){
       console.log(users[id].name + " leave room");
     }
-    console.log("ID: " + socket.id.substring(2) + " has disconnected");
-    users.splice(id, 1);
-    console.log(users);
-    io.sockets.emit('disconnect', users);
+    console.log("ID: " + id + " has disconnected");
+    delete users[id];
   });
-
-  function searchIndex(socketID){
-    for(var i=0; i < users.length; i++){
-      if(users[i].id == socketID) return i; 
-    }
-  }
   
 });
 
