@@ -23,6 +23,7 @@ io.on('connection', function (socket) {
 
   //Add new user to Client map
   socket.on('inRoomCtoS',function(data){
+    console.log(data);
     console.log(data.user.name + " entered room");
     users[data.ID] = data.user;
     io.sockets.emit('inRoomStoC', users);
