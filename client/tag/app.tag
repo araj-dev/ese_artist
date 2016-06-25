@@ -7,6 +7,7 @@
         this.user = {
             name:"michael"
         };
+        this.users = [];
         socket.on('connect',function(){
             console.log(socket.id);
             console.log('connected');
