@@ -12,9 +12,11 @@
             console.log(socket.id);
             console.log('connected');
         });
-        function sendName(){
-            self.socket.emit('inRommCtoS',{id:self.socket.id,user:self.user});
+        this.sendName = function(){
+            self.socket.emit('inRoomCtoS',{id:self.socket.id,user:self.user});
         }
-        sendName();
+        this.on('mount',function(){
+            self.sendName();
+        });
     </script>
 </app>
