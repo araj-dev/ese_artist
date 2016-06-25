@@ -15,10 +15,6 @@ var io = socketio.listen(server);
 
 router.use(express.static(path.resolve(__dirname, 'client')));
 
-router.get('/', function (req, res) {
-    res.send("./client/index.html");
-});
-
 var users = {};
 
 io.on('connection', function (socket) {
