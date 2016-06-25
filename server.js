@@ -25,14 +25,14 @@ io.on('connection', function (socket) {
   socket.on('inRoomCtoS',function(data){
     console.log(data);
     console.log(data.user.name + " entered room");
-    users[] = data;
+    users.push(data);
     io.sockets.emit('inRoomStoC', users);
   });
   
   socket.on('startGame',function(data){
     var eseID = Math.floor(Math.random()*Object.keys(users).length);
     data[eseID].ese = true;
-    
+
   });
   
   
