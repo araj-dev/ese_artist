@@ -26,15 +26,21 @@ io.on('connection', function (socket) {
     console.log(data);
     console.log(data.name + " entered room");
     users.push(data);
-    io.sockets.emit('inRoomStoC', users);
+    io.sockets.emit('updateUserStoC', users);
   });
   
   socket.on('startGame',function(data){
     var eseID = Math.floor(Math.random() * users.length);
     data[eseID].ese = true;
-    io.socket.emit('startGame', users);
+    io.sockets.emit('startGame', users);
   });
   
+  socket.on('updateUserCtoS',function(data){
+    var i = searchIndex(socket.id.substring(2));
+    users[i] = data;
+    io.sockets.emit('updateUserStoC',users);
+  });
+    
   //Disconncting action
   socket.on('disconnect',function(){
     console.log(users);
@@ -45,7 +51,7 @@ io.on('connection', function (socket) {
     console.log("ID: " + socket.id.substring(2) + " has disconnected");
     users.splice(id, 1);
     console.log(users);
-    io.sockets.emit('removeUserStoC', users);
+    io.sockets.emit('updateUserStoC', users);
   });
 
   function searchIndex(socketID){
