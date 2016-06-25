@@ -24,8 +24,8 @@ io.on('connection', function (socket) {
   //Add new user to Client map
   socket.on('inRoomCtoS',function(data){
     console.log(data);
-    console.log(data.user.name + " entered room");
-    users[] = data;
+    console.log(data.name + " entered room");
+    users.push(data);
     io.sockets.emit('inRoomStoC', users);
   });
   

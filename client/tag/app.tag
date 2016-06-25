@@ -9,7 +9,7 @@
         this.socket = opts;
         this.odai = "お題"
         this.user = {
-            id:self.socke.id,
+            id:"",
             name:"michael",
             ese:false,
             ready:false,
@@ -17,7 +17,7 @@
         this.users = [];
         this.entered=false;
         socket.on('connect',function(){
-            console.log('connected');
+            self.user.id = self.socket.id;
         });
         socket.on('inRoomStoC',function(data){
             console.dir(data);
@@ -26,9 +26,10 @@
             self.update;
         });
         enterRoom = function(name){
+            self.user.id = self.socket.id;
             self.user.name = name;
             self.entered = true;
-            self.socket.emit('inRoomCtoS',{id:self.socket.id,user:self.user});
+            self.socket.emit('inRoomCtoS',self.user);
             self.update();
         };
     </script>
