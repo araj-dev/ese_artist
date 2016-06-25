@@ -8,7 +8,9 @@
     </li>
    </div>
    <script>
-       this.users = opts.userslist;
-       console.log(opts);
+       this.on('update',function(){
+           this.users = opts.userslist;
+           this.update();
+       });
    </script>
 </userlist>

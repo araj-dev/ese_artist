@@ -21,8 +21,7 @@
         });
         socket.on('inRoomStoC',function(data){
             self.users = data;
-            self.update;
-            console.log(self.users);
+            self.update();
         });
         enterRoom = function(name){
             self.user.id = self.socket.id;
