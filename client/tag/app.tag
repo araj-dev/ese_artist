@@ -29,7 +29,8 @@
             self.update();
         });
         socket.on('removeUserStoC',function(data){
-            seld.users = data;
+            console.log(data);
+            self.users = data;
             self.update();
         });
         enterRoom = function(name){
