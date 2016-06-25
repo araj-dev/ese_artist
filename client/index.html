@@ -4,13 +4,17 @@
     <title>hello</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/style.css">
+    <script src="js/riot+compiler.min.js"></script>
+    <script type="riot/tag" src="tag/app.tag"></script>
   </head>
   
   <body>
-    <h1>hello world</h1>
-    <p>test</p>
+    <app></app>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/js/jquery.min.js"></script>
     <script src="/js/main.js"></script>
+    <script>
+    riot.mount('*');  
+    </script>
   </body>
 </html>
