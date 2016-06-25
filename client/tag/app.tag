@@ -2,6 +2,11 @@
     <h2>Application Root</h2>
     <enter if={!entered} enterroom = {enterRoom}></enter>
     <userlist if={entered} userslist = {users} ></userlist>
+    <div if={entered} class="info">
+        <p>あなたの情報</p>
+        <p>名前：{user.name}</p>
+        <p if={user.ese} style={"color":"red"}>あなたがエセ芸術家です</p>
+    </div>
     
     <script>
         var self = this;
@@ -21,6 +26,10 @@
         });
         socket.on('inRoomStoC',function(data){
             self.users = data;
+            self.update();
+        });
+        socket.on('removeUserStoC',function(data){
+            seld.users = data;
             self.update();
         });
         enterRoom = function(name){
