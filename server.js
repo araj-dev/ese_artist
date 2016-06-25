@@ -25,7 +25,7 @@ io.on('connection', function (socket) {
   socket.on('inRoomCtoS',function(data){
     console.log(data);
     console.log(data.user.name + " entered room");
-    users[data.ID] = data.user;
+    users[data.id] = data.user;
     io.sockets.emit('inRoomStoC', users);
   });
   
