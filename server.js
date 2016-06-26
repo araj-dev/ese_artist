@@ -30,6 +30,8 @@ io.on('connection', function (socket) {
   });
   
   socket.on('startGame',function(data){
+    var i = searchIndex(socket.id.substring(2));
+    users[i] = data;
     io.sockets.emit('updateUserStoC', users);
     for(var i = 0; i < users.length; i++){
       if(!users[i].ready) return;
