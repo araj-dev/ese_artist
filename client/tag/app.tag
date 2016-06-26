@@ -33,6 +33,7 @@
             self.update();
         });
         socket.on('updateUserStoC',function(data){
+            self.users = data;
             data.forEach(function(user){
                 if(user.id==self.user.id){
                     self.user = user;

@@ -8,6 +8,7 @@ var path = require('path');
 var fs = require('fs');
 var socketio = require('socket.io');
 var express = require('express');
+var async = require('async');
 
 var router = express();
 var server = http.createServer(router);
@@ -23,28 +24,60 @@ io.on('connection', function (socket) {
 
   //Add new user to Client map
   socket.on('inRoomCtoS',function(data){
-    console.log(data);
     console.log(data.name + " has entered");
-    users.push(data);
-    io.sockets.emit('updateUsersStoC', users);
+      async.waterfall([
+          function(next){
+              users.push(data);
+              console.log("pushed");
+              next(null);
+          },
+          function(next) {
+              console.log(users);
+              io.sockets.emit('updateUsersStoC', users);
+              console.log("emit");
+              next(null);
+          }
+      ],
+      function(){
+          console.log("updated");
+      });
   });
   
   socket.on('startGame',function(data){
-    var s = searchIndex(socket.id.substring(2));
-    users[s] = data;
-    io.sockets.emit('updateUsersStoC', users);
-    for(var i = 0; i < users.length; i++){
-      if(!users[i].ready) return;
-    }
-      for(var i = 0; i < users.length; i++){
-        users[i].odai = "ゴリラ（仮）";
-        users[i].ready = false;
-        users[i].ese = false;
-      }
-    var r = Math.floor(Math.random()*users.length);
-      users[r].ese = true;
-      users[r].odai = "エセ";
-      io.sockets.emit('updateUserStoC',users);
+      async.waterfall([
+          function(next){
+              var s = searchIndex(socket.id.substring(2));
+              users[s] = data;
+              next();
+          },
+          function(next){
+              io.sockets.emit('updateUsersStoC', users);
+              next();
+          },
+          function(next){
+              for(var i = 0; i < users.length; i++){
+                  if(!users[i].ready) return;
+              }
+              next();
+          },
+          function(next){
+              for(var k = 0; k < users.length; k++){
+                  users[k].odai = "ゴリラ（仮）";
+                  users[k].ready = false;
+                  users[k].ese = false;
+              }
+              console.log(users);
+              next();
+          },
+          function(next){
+              var r = Math.floor(Math.random()*users.length);
+              users[r].ese = true;
+              users[r].odai = "エセ";
+              next();
+          }
+      ],function(){
+          io.sockets.emit('updateUserStoC',users);
+      });
   });
   
   socket.on('updateUserCtoS',function(data){
@@ -53,7 +86,7 @@ io.on('connection', function (socket) {
     io.sockets.emit('updateUsersStoC',users);
   });
     
-  //Disconncting action
+  //Disconnecting action
   socket.on('disconnect',function(){
     console.log(users);
     var id = searchIndex(socket.id.substring(2));
