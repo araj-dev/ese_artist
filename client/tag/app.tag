@@ -40,7 +40,7 @@
         };
         onReady = function(){
             self.user.ready = true;
-            socket.emit('updateUserCtoS',self.user);
+            socket.emit('startGame',self.user);
             self.update();
         }
     </script>

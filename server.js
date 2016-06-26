@@ -33,14 +33,13 @@ io.on('connection', function (socket) {
     io.sockets.emit('updateUserCtoS', users);
     for(var i = 0; i < users.length; i++){
       if(!users[i].ready) return;
-    }
-    for(var i = 0; i < users.length; i++){
       if(i == Math.floor(Math.random()*users.length)) {
         data[i].ese = true;
         data[i].odai = "エセ";
       }
       data[i].odai = "ゴリラ（仮）"
     }
+      io.sockets.emit('updateUserStoC',users);
   });
   
   socket.on('updateUserCtoS',function(data){
