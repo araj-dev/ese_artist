@@ -1,24 +1,26 @@
 <app>
-    <h2>Application Root</h2>
+   <div class="wrapper">
+    <h2>芸術家、ニューヨークへ行く</h2>
     <enter if={!entered} enterroom = {enterRoom}></enter>
     <userlist if={entered} userslist = {users} ></userlist>
     <div if={entered} class="info">
         <p>あなたの情報</p>
         <p>名前：{user.name}</p>
-        <p if={user.ese} style={"color":"red"}>あなたがエセ芸術家です</p>
+        <p if={!user.ese}>あなたは<strong>芸術家</strong>です</p>
+        <p if={user.ese} >あなたは<strong>エセ芸術家</strong>です</p>
         <input type="button" onclick="{onReady}" value="Next Game?">
     </div>
-    
+    </div>
     <script>
         var self = this;
         this.entered = false;
         this.socket = opts;
-        this.odai = "お題"
         this.user = {
             id:"",
             name:"michael",
             ese:false,
             ready:false,
+            odai:"odai"
         };
         this.entered=false;
         this.users = [];
@@ -42,4 +44,19 @@
             self.update();
         }
     </script>
+    
+    <style scoped>
+        .wrapper {
+            width:800px;
+            padding:30px;
+            margin:auto;
+            background: rgba(122, 219, 171, 0.69);
+        }
+        .info{
+            width:400px;
+            padding:20px;
+            margin:auto;
+            background: rgba(248, 248, 222, 0.64);
+        }
+    </style>
 </app>
