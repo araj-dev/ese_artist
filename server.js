@@ -30,7 +30,7 @@ io.on('connection', function (socket) {
   });
   
   socket.on('startGame',function(data){
-    io.sockets.emit('updateUserCtoS', users);
+    io.sockets.emit('updateUserStoC', users);
     for(var i = 0; i < users.length; i++){
       if(!users[i].ready) return;
       if(i == Math.floor(Math.random()*users.length)) {
