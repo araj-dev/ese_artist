@@ -24,15 +24,29 @@ io.on('connection', function (socket) {
   //Add new user to Client map
   socket.on('inRoomCtoS',function(data){
     console.log(data);
-    console.log(data.name + " entered room");
+    console.log(data.name + " has entered");
     users.push(data);
     io.sockets.emit('updateUserStoC', users);
   });
   
   socket.on('startGame',function(data){
+    var cnt;
+    for(var i = 0; i < users.length; i++){
+      if(users[i].ready) cnt++;
+    }
+    if(cnt != users.length){
+      io.sockets.emit('updateUserCtoS', users);
+      return;
+    }
     var eseID = Math.floor(Math.random() * users.length);
-    data[eseID].ese = true;
-    io.sockets.emit('startGame', users);
+    for(var i = 0; i < users.length; i++){
+      if(i == eseID) {
+        data[i].ese = true;
+        data[i].odai = "エセ";
+      }
+      data[i].odai = "ゴリラ（仮）"
+    }
+    io.sockets.emit('updateUserCtoS', users);
   });
   
   socket.on('updateUserCtoS',function(data){
@@ -46,7 +60,7 @@ io.on('connection', function (socket) {
     console.log(users);
     var id = searchIndex(socket.id.substring(2));
     if(typeof users[id] !== "undefined"){
-      console.log(users[id].name + " leave room");
+      console.log(users[id].name + " has leaved");
     }
     console.log("ID: " + socket.id.substring(2) + " has disconnected");
     users.splice(id, 1);
