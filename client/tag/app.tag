@@ -27,8 +27,16 @@
         socket.on('connect',function(){
             self.user.id = self.socket.id;
         });
-        socket.on('updateUserStoC',function(data){
+        socket.on('updateUsersStoC',function(data){
             self.users = data;
+            self.update();
+        });
+        socket.on('updateUserStoC',function(data){
+            data.forEach(function(user){
+                if(user.id==self.user.id){
+                    self.user = user;
+                }
+            });
             self.update();
         });
         enterRoom = function(name){
