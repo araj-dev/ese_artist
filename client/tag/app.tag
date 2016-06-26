@@ -8,6 +8,7 @@
         <p>名前：{user.name}</p>
         <p if={!user.ese}>あなたは<strong>芸術家</strong>です</p>
         <p if={user.ese} >あなたは<strong>エセ芸術家</strong>です</p>
+        <p if={!user.ese}>お題は「{user.odai}」です</p>
         <input type="button" onclick="{onReady}" value="Next Game?">
     </div>
     </div>

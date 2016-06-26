@@ -26,17 +26,21 @@ io.on('connection', function (socket) {
     console.log(data);
     console.log(data.name + " has entered");
     users.push(data);
-    io.sockets.emit('updateUserStoC', users);
+    io.sockets.emit('updateUsersStoC', users);
   });
   
   socket.on('startGame',function(data){
     var s = searchIndex(socket.id.substring(2));
-      users[s] = data;
-    io.sockets.emit('updateUserStoC', users);
+    users[s] = data;
+    io.sockets.emit('updateUsersStoC', users);
     for(var i = 0; i < users.length; i++){
       if(!users[i].ready) return;
-        users[i].odai = "ゴリラ（仮）";
     }
+      for(var i = 0; i < users.length; i++){
+        users[i].odai = "ゴリラ（仮）";
+        users[i].ready = false;
+        users[i].ese = false;
+      }
     var r = Math.floor(Math.random()*users.length);
       users[r].ese = true;
       users[r].odai = "エセ";
@@ -46,7 +50,7 @@ io.on('connection', function (socket) {
   socket.on('updateUserCtoS',function(data){
     var i = searchIndex(socket.id.substring(2));
     users[i] = data;
-    io.sockets.emit('updateUserStoC',users);
+    io.sockets.emit('updateUsersStoC',users);
   });
     
   //Disconncting action
@@ -59,7 +63,7 @@ io.on('connection', function (socket) {
     console.log("ID: " + socket.id.substring(2) + " has disconnected");
     users.splice(id, 1);
     console.log(users);
-    io.sockets.emit('updateUserStoC', users);
+    io.sockets.emit('updateUsersStoC', users);
   });
 
   function searchIndex(socketID){
