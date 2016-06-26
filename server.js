@@ -30,17 +30,16 @@ io.on('connection', function (socket) {
   });
   
   socket.on('startGame',function(data){
-    var i = searchIndex(socket.id.substring(2));
-    users[i] = data;
+    var s = searchIndex(socket.id.substring(2));
+      users[s] = data;
     io.sockets.emit('updateUserStoC', users);
     for(var i = 0; i < users.length; i++){
       if(!users[i].ready) return;
-      if(i == Math.floor(Math.random()*users.length)) {
-        data[i].ese = true;
-        data[i].odai = "エセ";
-      }
-      data[i].odai = "ゴリラ（仮）"
+        users[i].odai = "ゴリラ（仮）";
     }
+    var r = Math.floor(Math.random()*users.length);
+      users[r].ese = true;
+      users[r].odai = "エセ";
       io.sockets.emit('updateUserStoC',users);
   });
   
