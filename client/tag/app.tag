@@ -3,6 +3,7 @@
     <h2>芸術家、ニューヨークへ行く</h2>
     <enter if={!entered} enterroom = {enterRoom}></enter>
     <userlist if={entered} userslist = {users} ></userlist>
+       <h3>テーマ:{theme}</h3>
     <div if={entered} class="info">
         <p>あなたの情報</p>
         <p>名前：{user.name}</p>
@@ -23,8 +24,8 @@
             ready:false,
             odai:"odai"
         };
-        this.entered=false;
         this.users = [];
+        this.theme = "";
         socket.on('connect',function(){
             self.user.id = self.socket.id;
         });
@@ -39,6 +40,10 @@
                     self.user = user;
                 }
             });
+            self.update();
+        });
+        socket.on('themeUpdate',function(data){
+            self.theme = data;
             self.update();
         });
         enterRoom = function(name){
